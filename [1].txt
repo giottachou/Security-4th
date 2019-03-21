@@ -1,0 +1,85 @@
+Εμφάνιση κλειδιών
+gpg --list-keys
+gpg --list-keys aasda
+
+Παραγωγή PKI κλειδιών
+gpg --gen-key
+
+Εξαγωγή Δημοσίου Κλειδιού
+gpg --export EMAIL > pubkey.asc
+
+Εξαγωγή σε ASCII
+gpg --armor --export you@example.com > mykey.asc
+
+Αποστολή Δημοσίου κλειδιού ή δημοσίευση σε κάποιο keyserver
+gpg --keyserver certserver.pgp.com --send-key blake@cyb.org
+
+Εισαγωγή κλειδιού (Δημοσίου άλλου)
+gpg --import alicepubkey.asc
+gpg --keyserver certserver.pgp.com --recv-key 0xBB7576AC
+
+Εμπιστοσύνη στο key
+gpg --edit-key Alice
+trust
+
+Κρυπτογράφηση μηνύματος
+gpg --encrypt --recipient alice@gmail.com message-for-alice.txt
+
+Αποκρυπτογράφηση
+gpg --decrypt message-for-me.gpg
+
+Αποκρυπτογράφηση και αποστολή σε αρχείο
+gpg --decrypt --output message message-for-me.gpg
+
+Ψηφιακή υπογραφή
+gpg --output message.sig --sign message-for-alice.gpg
+
+gpg --decrypt --output message.gpg message.sig
+
+
+Έλεγχος ακεραιότητας
+md5sum file.txt
+Παράγει ένα checksum που είναι μοναδικό για το αρχείο και
+ αν το στείλεις μπορεί κάποιος να το κάνει check
+
+Κρυπτογράφηση μηνύματος με παραλήπτη τον Stylianos Karagiannis
+echo "hello" | gpg --encrypt --armor --recipient "Stylianos Karagiannis" --no-version
+
+Επισύναψη ψηφιακής υπογραφής στο αρχείο out.txt με το private key του skaragiannis@ionio.gr
+gpg --encrypt --sign --armor -r skaragiannis@ionio.gr out.txt
+
+Αποστολή κλειδιού στο keys.gnupg.net
+gpg --keyserver keys.gnupg.net --send-key skaragiannis@ionio.gr (ή 2FFC2FF0)
+
+1. Δημιουργείστε Public key και Private key με βάση το email σας
+2. Εξάγετε σε ένα αρχείο το public key
+3. Εξάγετε σε ένα αρχείο το private key
+4. Δημοσιεύστε το κλειδί σας
+5. Κρυπτογραφήστε ένα αρχείο με βάση το public key ενός άλλου
+6. Υπογράψτε το αρχείο (digital sign)
+7. Αποστείλετε το αρχείο (κρυπτογραφημένο email), μαζί με το checksum στο email
+8. Αποκρυπρογραφήστε το αρχείο
+9. Δείτε την υπογραφή και το checksum
+10. Αποκρυπτογραφήστε το αρχείο
+
+More info 
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Step_by_Step_Guide/s1-gnupg-keypair.html
+
+
+
+===================================
+===================================
+=============Assigment==============================================
+===================================
+===================================
+
+
+1. Ανοίξτε το Email
+2. Αποκρυπτογραφήστε το μήνυμα και το αρχείο που έχει
+3. Πάρτε το hash που είναι στο αρχείο και τοποθετήστε το στο body του email
+4. Κάντε convert του hash σε base64 και τοποθετήστε το αποτέλεσμα μέσα στο αρχείο
+5. Κάντε generate το hash για integrity check
+6. Στο Email τοποθετήστε το αρχείο κρυπτογραφημένο με το pk του skaragiannis@ionio.gr + το md5checksum του αρχείου
+7. Στείλτε το email κρυπτογραφημένο με το public key skaragiannis@ionio.gr μαζί με το αρχείο + checksum
+
+
